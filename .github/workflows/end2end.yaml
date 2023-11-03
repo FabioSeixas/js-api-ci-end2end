@@ -26,3 +26,5 @@ jobs:
 
       - name: run migrations
         run: npm run db:setup
+        env:
+          POSTGRES_HOST: db
