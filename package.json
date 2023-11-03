@@ -6,7 +6,8 @@
   "author": "Wellington Gomes",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "db:setup": "node src/database/migration.js"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -14,9 +15,6 @@
     "pg": "^8.9.0"
   },
   "devDependencies": {
-    "eslint": "^8.33.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
     "nodemon": "^2.0.20"
   }
 }
