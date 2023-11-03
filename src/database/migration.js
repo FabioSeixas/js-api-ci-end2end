@@ -11,16 +11,17 @@ const client = new Client({
 client
   .connect()
   .then(async () => {
-    await client.query(`
+    try {
+      await client.query(`
       CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     `);
-    await client.query(`
+      await client.query(`
       CREATE TABLE IF NOT EXISTS categories (
         id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
         name VARCHAR NOT NULL
       );
     `);
-    await client.query(`
+      await client.query(`
       CREATE TABLE IF NOT EXISTS contacts (
         id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
         name VARCHAR NOT NULL,
@@ -30,10 +31,17 @@ client
         FOREIGN KEY(category_id) REFERENCES categories(id)
       );
     `);
-    console.log("DB setup ready!")
-    client.end()
+    } catch (err) {
+      console.warn('conected error ', err);
+      process.exit(1);
+    }
+    console.log('DB setup ready!');
+    client.end();
   })
-  .catch((error) => console.warn('conected error ', error));
+  .catch((error) => {
+    console.warn('conected error ', error);
+    process.exit(1);
+  });
 
 exports.query = async (query, values) => {
   const { rows } = await client.query(query, values);
