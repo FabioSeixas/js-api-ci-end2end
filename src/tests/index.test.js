@@ -1,9 +1,15 @@
-const runMigrations = require('../database/migration');
+const db = require('../database/migration');
 require('../index');
 const request = require('supertest');
 
 beforeAll(async () => {
-  await runMigrations();
+  await db.runMigrations();
+});
+
+afterAll((done) => {
+  db.endConnection().then(
+    () => done()
+  );
 });
 
 it('get contact list', async () => {

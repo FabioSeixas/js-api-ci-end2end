@@ -8,6 +8,10 @@ const client = new Client({
   database: 'mycontacts',
 });
 
+async function endConnection() {
+  return client.end()
+}
+
 async function runMigrations() {
   return client
     .connect()
@@ -45,4 +49,7 @@ async function runMigrations() {
     });
 }
 
-module.exports = runMigrations
+module.exports = {
+  runMigrations,
+  endConnection
+}
