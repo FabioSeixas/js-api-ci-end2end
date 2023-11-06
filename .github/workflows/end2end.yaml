@@ -26,5 +26,5 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: run migrations
-        run: npm run db:setup
+      - name: Tests
+        run: npm run test
