@@ -6,17 +6,29 @@ beforeAll(async () => {
   await db.runMigrations();
 });
 
+beforeEach(async () => {
+  await db.cleanDB();
+});
 afterAll((done) => {
-  db.endConnection().then(
-    () => done()
-  );
+  db.endConnection().then(() => done());
 });
 
-it('get contact list', async () => {
-  const result = await request('localhost:3001').get('/contacts');
+describe('Tests', () => {
+  it('get contact list', async () => {
+    const result = await request('localhost:3001').get('/contacts');
 
-  expect(result.body).toStrictEqual([
-    { name: 'Renata', id: '1234' },
-    { name: 'Lucas', id: '4321' },
-  ]);
+    console.log('first test');
+
+    expect(result.body.length).toBe(0);
+  });
+
+  it('get contact list', async () => {
+    const result = await request('localhost:3001').post('/contacts').send({
+      name: 'Renata',
+    });
+
+    console.log(result.body);
+
+    expect(result.body.name).toBe('Renata');
+  });
 });

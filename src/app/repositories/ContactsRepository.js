@@ -1,20 +1,16 @@
-// const db = require('../../database');
+const db = require('../../database');
 
 class ContactsRepository {
   async findAll(orderBy = 'ASC') {
     const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
-    // const rows = await db.query(
-    //   `
-    //     SELECT contacts.*, categories.name AS category_name
-    //     FROM contacts
-    //     LEFT JOIN categories ON categories.id = contacts.category_id
-    //     ORDER BY contacts.name ${direction}
-    //   `,
-    // );
-    return [
-      { name: 'Renata', id: '1234' },
-      { name: 'Lucas', id: '4321' },
-    ];
+    return db.query(
+      `
+        SELECT contacts.*, categories.name AS category_name
+        FROM contacts
+        LEFT JOIN categories ON categories.id = contacts.category_id
+        ORDER BY contacts.name ${direction}
+      `,
+    );
   }
 
   async findById(id) {
@@ -40,17 +36,16 @@ class ContactsRepository {
   }
 
   async create({ name, email, phone, category_id }) {
-    // const [row] = await db.query(
-    //   `
-    //   INSERT INTO contacts(name, email, phone, category_id)
-    //   VALUES($1, $2, $3, $4)
-    //   RETURNING *
-    // `,
-    //   [name, email, phone, category_id],
-    // );
+    const [row] = await db.query(
+      `
+      INSERT INTO contacts(name, email, phone, category_id)
+      VALUES($1, $2, $3, $4)
+      RETURNING *
+    `,
+      [name, email, phone, category_id],
+    );
 
-    return {}
-    // return row;
+    return row;
   }
 
   async update(id, { name, email, phone, category_id }) {

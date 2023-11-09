@@ -9,7 +9,23 @@ const client = new Client({
 });
 
 async function endConnection() {
-  return client.end()
+  console.log('endConnection...');
+  return client.end();
+}
+
+async function cleanDB() {
+  try {
+    await client.query(`
+        DELETE FROM contacts
+      `);
+    await client.query(`
+        DELETE FROM categories
+      `);
+  } catch (err) {
+    console.log('Error while cleaning DB');
+    console.log(err);
+  }
+  return;
 }
 
 async function runMigrations() {
@@ -41,7 +57,6 @@ async function runMigrations() {
         process.exit(1);
       }
       console.log('DB setup ready!');
-      client.end();
     })
     .catch((error) => {
       console.warn('conected error ', error);
@@ -51,5 +66,6 @@ async function runMigrations() {
 
 module.exports = {
   runMigrations,
-  endConnection
-}
+  endConnection,
+  cleanDB,
+};
