@@ -18,4 +18,4 @@ jobs:
       - name: Publish new image
         run: |
           docker build . --tag ghcr.io/fabioseixas/api-js-ci-end2end:latest
-          docker push ghcr.io/fabioseixas/js-api-ci-end2end:latest
+          docker push ghcr.io/fabioseixas/api-js-ci-end2end:latest
