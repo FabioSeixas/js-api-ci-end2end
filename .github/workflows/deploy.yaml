@@ -10,7 +10,7 @@ jobs:
 
       - name: Publish new image
         run: |
-          docker login ghcr.io --username fabioseixas --password {{ secrets.GH_TOKEN_FABIO }}
+          docker login ghcr.io -u fabioseixas -p "{{ secrets.GH_TOKEN_FABIO }}"
           docker build . --tag ghcr.io/fabioseixas/api-js-ci-end2end:latest
           docker push ghcr.io/fabioseixas/js-api-ci-end2end:latest
 
