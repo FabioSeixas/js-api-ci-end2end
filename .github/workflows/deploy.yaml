@@ -8,11 +8,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: fabioseixas
+          password: ${{ secrets.GH_TOKEN_FABIO }}
+
       - name: Publish new image
         run: |
-          echo "{{ secrets.GH_TOKEN_FABIO }}" | docker login ghcr.io -u fabioseixas --password-stdin
           docker build . --tag ghcr.io/fabioseixas/api-js-ci-end2end:latest
           docker push ghcr.io/fabioseixas/js-api-ci-end2end:latest
-
-
-
